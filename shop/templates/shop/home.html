@@ -89,7 +89,7 @@
 
                                 <!-- Product image-->
                                 <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                                    <img class="card-img-top" src="{{product.get_absolute_url}}" alt="..." />
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">

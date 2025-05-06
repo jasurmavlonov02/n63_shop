@@ -1,10 +1,9 @@
-
 Product Detail
 Discount
-Adminkada code yozamiz
 Jinja
 url : namespace
 
+Adminkada code yozamiz
 
 STATIC_URL
 STATIC_ROOT
