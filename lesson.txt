@@ -1,0 +1,12 @@
+
+Product Detail
+Discount
+Adminkada code yozamiz
+Jinja
+url : namespace
+
+
+STATIC_URL
+STATIC_ROOT
+MEDIA_URL 
+MEDIA_ROOT
