@@ -1,11 +1,3 @@
-Product Detail
-Discount
-Jinja
-url : namespace
-
-Adminkada code yozamiz
-
-STATIC_URL
-STATIC_ROOT
-MEDIA_URL 
-MEDIA_ROOT
+AllProductsByCategory
+Search
+Order full logic
