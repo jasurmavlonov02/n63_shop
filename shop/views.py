@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Product,Category
+from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from .forms import OrderForm
@@ -50,8 +51,25 @@ def order_detail(request,pk):
         if form.is_valid():
             order = form.save(commit=False)
             order.product = product
-            order.save()
-            return redirect('index')
+            if product.amount < order.quantity:
+                # send message
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Don\'t have enough product quantity'
+                )
+              
+               
+            else:
+                product.amount -= order.quantity
+                product.save()
+                order.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Item successfully ordered'
+                )
+                return redirect('product_detail',pk)
     context = {
         'form':form,
         'product':product
