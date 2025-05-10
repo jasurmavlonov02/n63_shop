@@ -3,7 +3,8 @@ from .models import Product,Category
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
-from .forms import OrderForm
+from .forms import OrderForm,ProductForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -77,3 +78,17 @@ def order_detail(request,pk):
             
     return render(request,'shop/detail.html',context = context)
             
+            
+@login_required
+def create_product(request):
+    form = ProductForm()
+    if request.method == 'POST':
+        form = ProductForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    
+    context = {
+        'form':form
+    }
+    return render(request,'shop/create-product.html',context)

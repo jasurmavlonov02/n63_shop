@@ -74,6 +74,15 @@
                 <div class="col-1">
                     <a class="btn btn-outline-dark mt-auto" href="#"> Likes </a>
                 </div>
+                {%if user.is_authenticated%}
+                    <div class="col-1">
+                        <a href="{% url 'create_product' %}">
+                            <button type="button" class="btn btn-success" style="font-size: 16px; padding: 10px 20px; border-radius: 8px;">
+                                ➕ ADD PRODUCT
+                            </button>
+                        </a>
+                    </div>
+                {%endif%}
 
             </div>
         </div>

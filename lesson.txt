@@ -5,3 +5,5 @@ CREATE
 DELETE
 UPDATE
 READ
+
+login_required
