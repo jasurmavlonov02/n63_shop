@@ -52,7 +52,7 @@ def order_detail(request,pk):
         if form.is_valid():
             order = form.save(commit=False)
             order.product = product
-            if product.amount < order.quantity:
+            if product.amount < order.quantity or order.quantity == 0:
                 # send message
                 messages.add_message(
                     request,
@@ -91,4 +91,18 @@ def create_product(request):
     context = {
         'form':form
     }
-    return render(request,'shop/create-product.html',context)
+    return render(request,'shop/product/create.html',context)
+
+
+@login_required
+def edit_product(request):
+    pass
+
+
+@login_required
+def delete_product(request,pk):
+    product = get_object_or_404(Product,pk=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('index')
+    return render(request,'shop/product/delete.html',{'product':product})
