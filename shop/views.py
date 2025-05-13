@@ -3,7 +3,7 @@ from .models import Product,Category
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
-from .forms import OrderForm,ProductForm
+from .forms import OrderForm,ProductForm,CommentForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -106,3 +106,18 @@ def delete_product(request,pk):
         product.delete()
         return redirect('index')
     return render(request,'shop/product/delete.html',{'product':product})
+
+
+
+
+def comment_create(request,pk):
+    product =  get_object_or_404(Product,pk=pk)
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        comment = form.save(commit=False)
+        comment.product = product
+        comment.save()
+        return redirect('product_detail',pk)
+    
+    return render(request,'shop/detail.html',{'form':form})

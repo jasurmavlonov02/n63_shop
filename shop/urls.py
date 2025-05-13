@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index,product_detail,order_detail,create_product,delete_product
+from .views import index,product_detail,order_detail,create_product,delete_product,comment_create
 
 
 
@@ -13,5 +13,6 @@ urlpatterns = [
     # order logic
   
     path('order/detail/<int:pk>/',order_detail,name='order_detail'),
+    path('comment/create/<int:pk>',comment_create,name='comment_create')
 ]
 

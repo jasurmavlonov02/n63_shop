@@ -69,3 +69,21 @@ class Order(BaseModel):
 
 
 
+
+class Comment(BaseModel):
+    class RatingChoices(models.IntegerChoices):
+        ZERO = 0
+        ONE = 1
+        TWO = 2
+        THREE = 3
+        FOUR = 4
+        FIVE = 5
+        
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    content = models.TextField()
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='comments')
+    rating = models.IntegerField(choices = RatingChoices.choices,default = RatingChoices.THREE.value)
+    
+    def __str__(self):
+        return f'{self.name} - {self.rating}'

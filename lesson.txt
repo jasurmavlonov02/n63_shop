@@ -1,9 +1,4 @@
-order => quantity
-messages
-product 
-CREATE
-DELETE
-UPDATE
-READ
-
-login_required
+Comment 
+model
+View => Comment List , Comment CREATE
+Choices
