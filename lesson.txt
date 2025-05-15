@@ -1,4 +1,6 @@
-Comment 
-model
-View => Comment List , Comment CREATE
-Choices
+Expensive , Cheap , Rating
+
+Aggregate & Annotate Rating
+
+Admin => 
+

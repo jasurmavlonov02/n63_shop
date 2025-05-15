@@ -26,5 +26,5 @@ admin.site.index_title = "Welcome to UMSRA Researcher Portal"
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['name','email','rating','created_at']
+    list_display = ['name','email','rating','created_at','product']
     

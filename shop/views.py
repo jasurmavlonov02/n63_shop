@@ -5,6 +5,10 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from .forms import OrderForm,ProductForm,CommentForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
+from django.db.models.functions import Round
+
+
 
 
 # Create your views here.
@@ -12,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 
 def index(request,category_id=None):
     search_query = request.GET.get('q','')
+    filter_type = request.GET.get('filter','')
     categories = Category.objects.all()
     
     
@@ -22,8 +27,27 @@ def index(request,category_id=None):
     else:
         products = Product.objects.all() #.order_by('-price')
         
+    
+        
     if search_query:
         products = products.filter(name__icontains = search_query)
+        
+    products = products.annotate(avg_rating = Round(Avg('comments__rating'),precision = 2) )
+
+        
+    if filter_type == 'expensive':
+        products = products.order_by('-price')
+    
+    elif filter_type == 'cheap':
+        products = products.order_by('price')
+        
+    
+    elif filter_type == 'rating':
+        products = products.order_by('-avg_rating')
+    
+    # DRY => Dont Repeat Yourself
+    
+        
     
     
     context = {
