@@ -7,6 +7,7 @@ from .forms import OrderForm,ProductForm,CommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from django.db.models.functions import Round
+from .utils import product_rating_filter
 
 
 
@@ -34,16 +35,8 @@ def index(request,category_id=None):
         
     products = products.annotate(avg_rating = Round(Avg('comments__rating'),precision = 2) )
 
-        
-    if filter_type == 'expensive':
-        products = products.order_by('-price')
-    
-    elif filter_type == 'cheap':
-        products = products.order_by('price')
-        
-    
-    elif filter_type == 'rating':
-        products = products.order_by('-avg_rating')
+    products = product_rating_filter(filter_type,products)
+   
     
     # DRY => Dont Repeat Yourself
     

@@ -6,9 +6,15 @@ from decimal import Decimal
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    my_order = models.PositiveIntegerField(
+        default=0,
+        null=True,
+        blank=True
+    )
     
     class Meta:
         abstract = True
+        
 
 class Category(BaseModel):
     title = models.CharField(max_length=100,unique=True)
@@ -19,6 +25,7 @@ class Category(BaseModel):
     class Meta:
         verbose_name_plural = 'categories'
         verbose_name = 'category'
+        ordering = ['my_order']
 
 
 class Product(BaseModel):
@@ -49,7 +56,7 @@ class Product(BaseModel):
     class Meta:
         verbose_name_plural = 'products'
         verbose_name = 'product'
-        ordering = ['-price']
+        ordering = ['my_order']
 
 
 
