@@ -28,22 +28,45 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{% url 'index' %}">All Products</a></li>
+                                <li><a class="dropdown-item" href="{% url 'shop:index' %}">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 {% for category in categories%}
-                                    <li><a class="dropdown-item" href="{% url 'products_by_category' category.id %}">{{category.title}}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'shop:products_by_category' category.id %}">{{category.title}}</a></li>
                                 {%endfor%}
                             </ul>
                         </li>
                     </ul>
                     <form method="get" class="d-flex">
                         <input type="text" class="form-contro" name="q">
-                        <button class="btn btn-outline-dark" type="submit">
+                        <button style="margin-right: 50px;" class="btn btn-outline-dark" type="submit">
                             <i class="bi-search-fill me-1"></i>
                             Search
                            
                         </button>
                     </form>
+
+                  
+                    
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'users:logout_page' %}">
+                        {%csrf_token%}
+                        <div> 
+                                <button  type="submit" class="btn btn-primary">
+                                    Logout
+                                </button>
+                            {{user.email}}
+                        </div>
+                    </form>
+                    {%else%}
+                        <div>
+                            <a href="{% url 'users:login_page' %}">
+                                <button  type="button" class="btn btn-primary">
+                                    Login
+                                </button>
+                            </a>
+                        </div>
+
+                    {%endif%}
                 </div>
             </div>
         </nav>
@@ -76,7 +99,7 @@
                 </div>
                 {%if user.is_authenticated%}
                     <div class="col-1">
-                        <a href="{% url 'create_product' %}">
+                        <a href="{% url 'shop:create_product' %}">
                             <button type="button" class="btn btn-success" style="font-size: 16px; padding: 10px 20px; border-radius: 8px;">
                                 ➕ ADD PRODUCT
                             </button>
@@ -98,7 +121,7 @@
                                 {%endif%}
 
                                 <!-- Product image-->
-                                <a href="{% url 'product_detail' product.id %}">
+                                <a href="{% url 'shop:product_detail' product.id %}">
                                     <img class="card-img-top" src="{{product.get_absolute_url}}" alt="..." />
                                 </a>
                                 <!-- Product details-->
@@ -121,7 +144,7 @@
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View product</a></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'shop:product_detail' product.id %}">View product</a></div>
                                 
                                     
                                 </div>

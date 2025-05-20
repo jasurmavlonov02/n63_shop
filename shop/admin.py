@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, Category,Order,Comment
-from django.contrib.auth.models import User,Group
+
 from adminsortable2.admin import SortableAdminMixin
 
 # Register your models here.

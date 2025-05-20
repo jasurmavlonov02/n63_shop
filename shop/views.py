@@ -53,7 +53,11 @@ def index(request,category_id=None):
 def product_detail(request,product_id):
     try:
         product = Product.objects.get(id = product_id)
-        context = {'product':product}
+        related_products = Product.objects.filter(category = product.category).exclude(id=product.id)
+        context = {
+            'product':product,
+            'related_products':related_products,
+            }
         return render(request,'shop/detail.html',context)
     
     except Product.DoesNotExist:
@@ -87,7 +91,7 @@ def order_detail(request,pk):
                     messages.SUCCESS,
                     'Item successfully ordered'
                 )
-                return redirect('product_detail',pk)
+                return redirect('shop:product_detail',pk)
     context = {
         'form':form,
         'product':product
@@ -103,7 +107,7 @@ def create_product(request):
         form = ProductForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('shop:index')
     
     context = {
         'form':form
@@ -121,7 +125,7 @@ def delete_product(request,pk):
     product = get_object_or_404(Product,pk=pk)
     if request.method == 'POST':
         product.delete()
-        return redirect('index')
+        return redirect('shop:index')
     return render(request,'shop/product/delete.html',{'product':product})
 
 
@@ -135,6 +139,6 @@ def comment_create(request,pk):
         comment = form.save(commit=False)
         comment.product = product
         comment.save()
-        return redirect('product_detail',pk)
+        return redirect('shop:product_detail',pk)
     
     return render(request,'shop/detail.html',{'form':form})

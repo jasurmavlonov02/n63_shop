@@ -1,9 +1,4 @@
-Expensive , Cheap , Rating
-
-Aggregate & Annotate Rating
-
-Admin => Jazzmin , Baton
-
-adminsortable=> Youtube play list order
-
-Inlines => StacedInline , TabularInline
+Related products
+Login
+Logout
+namespace => multiple app
