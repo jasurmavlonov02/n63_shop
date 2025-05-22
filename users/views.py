@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .forms import LoginForm
+from .forms import LoginForm,RegisterModelForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 
@@ -37,3 +37,15 @@ def logout_page(request):
     if request.method == 'POST':
         logout(request)
         return redirect('shop:index')
+    
+    
+def register_page(request):
+    form = RegisterModelForm()
+    if request.method == 'POST':
+        form = RegisterModelForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect('shop:index')
+    return render(request,'users/register.html',{'form':form})
